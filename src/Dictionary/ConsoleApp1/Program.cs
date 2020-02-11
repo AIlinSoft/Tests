@@ -10,7 +10,7 @@ namespace MiniDictionaryVsArray
     {
         static void Main(string[] args)
         {
-            for(int i = 10; i < 2000; i+=10)
+            for (int i = 10; i < 200; i += 10)
             {
                 Tester t = new Tester(i);
                 t.Start();
