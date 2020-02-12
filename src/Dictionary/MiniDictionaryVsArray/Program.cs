@@ -8,12 +8,19 @@ namespace MiniDictionaryVsArray
 {
     class Program
     {
+        private static readonly int m_ArrayLength = 50000;
         static void Main(string[] args)
         {
-            for(int i = 10; i < 2000; i+=10)
+            int[] searchValues = new int[m_ArrayLength];
+
+            for (int i = 10; i < 200; i+=10)
             {
-                Tester t = new Tester(i);
-                t.Start();
+                Random rand = new Random();
+                for (var j = 0; j < searchValues.Length; ++j)
+                    searchValues[j] = rand.Next(0, i - 1);
+
+                TesterDictionary t = new TesterDictionary(i, searchValues);
+                t.Run();
                 t = null;
                 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
                 GC.Collect(2, GCCollectionMode.Forced, true, true);
