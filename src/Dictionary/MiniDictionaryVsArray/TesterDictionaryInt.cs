@@ -6,27 +6,29 @@ using System.Text;
 
 namespace MiniDictionaryVsArray
 {
-    class TesterSortedList
+    class TesterDictionaryInt
     {
         private int m_ValuesLength;
-        private SortedList<int, int>[] m_SortedListValues;
+        private DictionaryIntTest<int>[] m_DictValues;
         private int[] m_SearchValues;
         private List<long> m_Times = new List<long>();
         int m_Result = 0;
-        public TesterSortedList(int valuesLength, int[] searchValues)
+        public TesterDictionaryInt(int valuesLength, int[] searchValues)
         {
             m_ValuesLength = valuesLength;
             m_SearchValues = searchValues;
-            m_SortedListValues = new SortedList<int, int>[searchValues.Length];
+            m_DictValues = new DictionaryIntTest<int>[searchValues.Length];
             Fill();
         }
         public void Fill()
         {
             for (int i = 0; i < m_SearchValues.Length; ++i)
             {
-                m_SortedListValues[i] = new SortedList<int, int>(m_ValuesLength);
+                m_DictValues[i] = new DictionaryIntTest<int>(m_ValuesLength);
                 for (int j = 0; j < m_ValuesLength; ++j)
-                    m_SortedListValues[i].Add(j, j);
+                {
+                    m_DictValues[i][j] = j;
+                }
             }
 
         }
@@ -38,10 +40,11 @@ namespace MiniDictionaryVsArray
             for (int i = 0; i < m_SearchValues.Length; ++i)
             {
 
-                if (m_SortedListValues[i].TryGetValue(m_SearchValues[i], out var val))
+                if (m_DictValues[i].TryGetValue(m_SearchValues[i], out var val))
                     result += val;
             }
             sw.Stop();
+            //  Console.WriteLine($"{nameof(Test1)} time: {(sw.Elapsed)}, result {result}");
             m_Result = result;
             if (storeTime)
                 m_Times.Add(sw.Elapsed.Ticks);
@@ -53,8 +56,7 @@ namespace MiniDictionaryVsArray
 
         public void Print()
         {
-            Console.WriteLine($"TesterSortedList: values {m_ValuesLength} avg {m_Times.Average()} ticks, result {m_Result}");
+            Console.WriteLine($"TesterDictionaryInt: values {m_ValuesLength} avg {m_Times.Average()} ticks, result {m_Result}");
         }
-
     }
 }

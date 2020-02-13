@@ -35,6 +35,7 @@ namespace MiniDictionaryVsArray
         private Entry<int>[] m_ArrayValues;
         private int[] m_SearchValues;
         private List<long> m_Times = new List<long>();
+        int m_Result = 0;
         public TesterArray(int valuesLength, int[] searchValues)
         {
             m_ValuesLength = valuesLength;
@@ -66,13 +67,17 @@ namespace MiniDictionaryVsArray
                     result += val;
             }
             sw.Stop();
+            m_Result = result;
             if (storeTime)
                 m_Times.Add(sw.Elapsed.Ticks);
         }
-
+        public double GetAverageTicks()
+        {
+            return m_Times.Average();
+        }
         public void Print()
         {
-            Console.WriteLine($"TesterArray: values {m_ValuesLength} avg {m_Times.Average()} ticks");
+            Console.WriteLine($"TesterArray: values {m_ValuesLength} avg {m_Times.Average()} ticks, result {m_Result}");
         }
     }
 }
