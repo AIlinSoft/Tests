@@ -13,20 +13,20 @@ namespace MiniDictionaryVsArray
         private int[] m_SearchValues;
         private List<long> m_Times = new List<long>();
         int m_Result = 0;
-        public TesterSortedList(int valuesLength, int[] searchValues)
+        public TesterSortedList(int valuesLength, int[] searchValues, int[][] fillValues)
         {
             m_ValuesLength = valuesLength;
             m_SearchValues = searchValues;
             m_SortedListValues = new SortedList<int, int>[searchValues.Length];
-            Fill();
+            Fill(fillValues);
         }
-        public void Fill()
+        public void Fill(int[][] fillValues)
         {
             for (int i = 0; i < m_SearchValues.Length; ++i)
             {
                 m_SortedListValues[i] = new SortedList<int, int>(m_ValuesLength);
                 for (int j = 0; j < m_ValuesLength; ++j)
-                    m_SortedListValues[i].Add(j, j);
+                    m_SortedListValues[i].Add(fillValues[i][j], fillValues[i][j]);
             }
 
         }
