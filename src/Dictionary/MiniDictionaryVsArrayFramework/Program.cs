@@ -8,7 +8,7 @@ namespace MiniDictionaryVsArray
 {
     class Program
     {
-        private static readonly int m_ArrayLength = 500000;
+        private static readonly int m_ArrayLength = 1000;
         static void Main(string[] args)
         {
             int[] searchValues = new int[m_ArrayLength];
@@ -23,9 +23,9 @@ namespace MiniDictionaryVsArray
             List<double> dict2 = new List<double>();
             List<double> dictInt2 = new List<double>();
             List<double> sortedList2 = new List<double>();
-            int stepCount = 1;
-            
-            for (int i = 10; i < 200; i+=10)
+            int stepCount = 1000;
+
+            for (int i = 10; i < 200; i += 10)
             {
                 Random rand = new Random();
                 for (var j = 0; j < searchValues.Length; ++j)
@@ -38,13 +38,13 @@ namespace MiniDictionaryVsArray
                     for (int k = 0; k < fillValues[j].Length; ++k)
                     {
                         int t = 0;
-                        while(true)
+                        while (true)
                         {
                             t = rand.Next(1, i + 1);
                             bool flag = false;
-                            for(var p = 0; p < k; ++p)
+                            for (var p = 0; p < k; ++p)
                             {
-                                if(fillValues[j][p] == t)
+                                if (fillValues[j][p] == t)
                                 {
                                     flag = true;
                                     break;
@@ -80,18 +80,6 @@ namespace MiniDictionaryVsArray
                 dict2.Add(GC.GetTotalMemory(false) - memoryCorrectBytesCount);
                 testerDictionary.Print();
                 testerDictionary = null;
-                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-                GC.Collect(2, GCCollectionMode.Forced, true, true);
-                
-                TesterDictionaryInt testerDictionaryInt = new TesterDictionaryInt(i, stepCount, searchValues, fillValues);
-                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-                GC.Collect(2, GCCollectionMode.Forced, true, true);
-                for (int j = 0; j < 10; ++j)
-                    testerDictionaryInt.Run(j > 0);
-                dictInt1.Add(testerDictionaryInt.GetAverageTicks());
-                dictInt2.Add(GC.GetTotalMemory(false) - memoryCorrectBytesCount);
-                testerDictionaryInt.Print();
-                testerDictionaryInt = null;
                 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
                 GC.Collect(2, GCCollectionMode.Forced, true, true);
 

@@ -13,8 +13,10 @@ namespace MiniDictionaryVsArray
         private int[] m_SearchValues;
         private List<long> m_Times = new List<long>();
         int m_Result = 0;
-        public TesterDictionaryInt(int valuesLength, int[] searchValues, int[][] fillValues)
+        private int m_StepCount = 0;
+        public TesterDictionaryInt(int valuesLength, int stepCount, int[] searchValues, int[][] fillValues)
         {
+            m_StepCount = stepCount;
             m_ValuesLength = valuesLength;
             m_SearchValues = searchValues;
             m_DictValues = new DictionaryIntTest<int>[searchValues.Length];
@@ -37,11 +39,14 @@ namespace MiniDictionaryVsArray
             int result = 0;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            for (int i = 0; i < m_SearchValues.Length; ++i)
+            for (int step = 0; step < m_StepCount; ++step)
             {
+                for (int i = 0; i < m_SearchValues.Length; ++i)
+                {
 
-                if (m_DictValues[i].TryGetValue(m_SearchValues[i], out var val))
-                    result += val;
+                    if (m_DictValues[i].TryGetValue(m_SearchValues[i], out var val))
+                        result += val;
+                }
             }
             sw.Stop();
             //  Console.WriteLine($"{nameof(Test1)} time: {(sw.Elapsed)}, result {result}");
